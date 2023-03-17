@@ -1,0 +1,24 @@
+import axios from 'axios'
+const url = 'http://localhost:3001/persons'
+
+const getAll = () => {
+    const request = axios.get(url)
+    return request
+}
+
+const create = newObject => {
+    const request = axios.post(url, newObject)
+    return request
+}
+
+const update = (id, newObject) => {
+    const request = axios.put(`${url}/${id}`, newObject)
+    return request
+}
+
+const remove = (id) => {
+    const request = axios.delete(`${url}/${id}`)
+    return request
+}
+
+export default {getAll, create, update, remove}
