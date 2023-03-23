@@ -16,6 +16,17 @@ const PersonForm = (props) => {
   )
 }
 
+const Notification = (props) => {
+  if (props.message === null) {
+    return null
+  }
+  return (
+    <div className={props.type}>
+      {props.message}
+    </div>
+  )
+}
+
 const Filter = (props) => {
   return (
     <div>
@@ -48,6 +59,8 @@ const App = () => {
   const [newFilter, setNewFilter] = useState('')
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
+  const [newNotification, setNotification] = useState(null)
+  const [newNotificationType,setNotificationType] = useState(null)
 
 
   const hook = () => {
@@ -69,25 +82,38 @@ const App = () => {
       }
     })
     console.log(found)
-    if (found &&  window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+    if (found ) {
+      if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)){
       personService
       .update(found.id, {name: newName , number: newNumber})
       .then(response => {
         const copy = persons.slice()
         copy[copy.indexOf(found)].number = newNumber
         setPersons(copy)
+        setNotification("Changed " + newName + "'s " + "number to " + newNumber)
+        setNotificationType("notification")
       })
       .catch(error => {
-        console.log("fail")
+        if (error.response.status == 404){
+          setNotification("Information of " + newName + " has already been removed from server.")
+          setNotificationType("error")
+          setTimeout(() => {
+            setNotification(null)
+          }, 3000)
+        }
       })
+    } 
     }
     else {
       personService
       .create({name: newName, number: newNumber})
         .then(person => {
           setPersons(persons.concat(person.data))
-          setNewName('')
-          setNewNumber('')
+          setNotification("Added " + newName)
+          setNotificationType("notification")
+          setTimeout(() => {
+            setNotification(null)
+          }, 3000)
       })
     }
   }
@@ -111,9 +137,16 @@ const App = () => {
       .remove(event.target.id)
       .then(response => {
         setPersons(persons.filter(n => n.id != event.target.id))
+        setNotification("Deleted " + event.target.name)
+        setNotificationType("notification")
+        setTimeout(() => {
+          setNotification(null)
+        }, 3000)
       })
       .catch(error => {
-        console.log("fail")
+        console.log(error)
+        setNotification("fail")
+        setNotificationType("error")
       })
       
     }
@@ -122,6 +155,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={newNotification} type={newNotificationType}/>
       <Filter handleFilterChange={handleFilterChange} newFilter={newFilter} />
       <PersonForm handleNameChange={handleNameChange} handleNumberChange={handleNumberChange} handleSubmit={handleSubmit} />
       <Persons persons={persons} newFilter={newFilter} handleDelete={handleDelete}/>
