@@ -3,7 +3,10 @@ let morgan = require('morgan')
 
 const app = express()
 app.use(express.json())
-app.use(morgan(':method :url :body'))
+
+morgan.token('response-body', (req, res) => {return JSON.stringify(req.body)});  // define 'response-body' token using JSON.stringify
+app.use(morgan('tiny'))
+app.use(morgan(':method :url :response-time :response-body'))
 
 let persons = [
     {
@@ -74,7 +77,6 @@ app.post('/api/persons', (request, response) => {
     console.log(person)
     persons = persons.concat(person)
     console.log(persons)
-    morgan.token('body', request => JSON.stringify(request.body))
     response.json(person)
 })
 
