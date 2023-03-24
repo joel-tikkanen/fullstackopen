@@ -1,5 +1,6 @@
 import axios from 'axios'
-const url = 'http://localhost:3001/persons'
+const url = 'https://puhelinluettelo-backend-71l4.onrender.com/api/persons'
+
 
 const getAll = () => {
     const request = axios.get(url)
