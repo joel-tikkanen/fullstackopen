@@ -136,7 +136,7 @@ const App = () => {
       personService
       .remove(event.target.id)
       .then(response => {
-        setPersons(persons.filter(n => n.id != event.target.id))
+        setPersons(persons.filter(n => n.id !== event.target.id))
         setNotification("Deleted " + event.target.name)
         setNotificationType("notification")
         setTimeout(() => {
