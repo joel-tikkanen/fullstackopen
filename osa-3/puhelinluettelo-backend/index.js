@@ -7,9 +7,9 @@ app.use(express.json())
 const cors = require('cors')
 app.use(cors())
 
-morgan.token('request-body', (req, res) => {return JSON.stringify(req.body)});
+morgan.token('response-body', (req, res) => {return JSON.stringify(req.body)});
 app.use(morgan('tiny'))
-app.use(morgan(':method :url :request-time :request-body'))
+app.use(morgan(':method :url :response-time :response-body'))
 
 let persons = [
     {

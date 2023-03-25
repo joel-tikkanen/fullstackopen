@@ -94,7 +94,7 @@ const App = () => {
         setNotificationType("notification")
       })
       .catch(error => {
-        if (error.response.status == 404){
+        if (error.response.status === 404){
           setNotification("Information of " + newName + " has already been removed from server.")
           setNotificationType("error")
           setTimeout(() => {
