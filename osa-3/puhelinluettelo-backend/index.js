@@ -3,7 +3,7 @@ let morgan = require('morgan')
 
 const app = express()
 const cors = require('cors')
-require('dotenv').config()
+//require('dotenv').config()
 const Person = require('./models/person')
 
 app.use(express.static('build'))
