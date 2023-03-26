@@ -14,10 +14,25 @@ mongoose.connect(url)
 mongoose.set('strictQuery', false)
 mongoose.connect(url)
 
+const numberValidator = (number) => {
+  return number.split('-')[0].length==2 ||  number.split('-')[0].length==3
+}
+
 const personSchema = new mongoose.Schema({
-  name: String,
-  number: String
+  name: {
+    type: String, 
+    minlength: 3,
+    required: true
+  },
+  number: {
+    type: String,
+    minlength: 8,
+    required: true,
+    validate: numberValidator
+  }
 })
+
+
 
 personSchema.set('toJSON', {
     transform: (document, returnedObject) => {

@@ -94,13 +94,11 @@ const App = () => {
         setNotificationType("notification")
       })
       .catch(error => {
-        if (error.response.status === 404){
-          setNotification("Information of " + newName + " has already been removed from server.")
+          setNotification(error)
           setNotificationType("error")
           setTimeout(() => {
             setNotification(null)
           }, 3000)
-        }
       })
     } 
     }
@@ -114,7 +112,16 @@ const App = () => {
           setTimeout(() => {
             setNotification(null)
           }, 3000)
+        
       })
+      .catch(error => {
+          setNotification(error.response.data.error)
+          setNotificationType("error")
+          setTimeout(() => {
+            setNotification(null)
+          }, 3000)
+      })
+      
     }
   }
 
