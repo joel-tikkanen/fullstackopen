@@ -70,17 +70,20 @@ app.post('/api/persons', (request, response, next) => {
         .catch(err => next(err))
 })
 
-app.put('api/persons/:id', (request, response, next) =>{
+app.put('/api/persons/:id', (request, response, next) =>{
     const body = request.body
     const person = {
         name: body.name,
         important: body.number
     }
     Person.findByIdAndUpdate(request.params.id, person, { new: true })
-    .then(updatedNote => {
-      response.json(updatedNote)
+    .then(updatedPerson => {
+      response.json(updatedPerson)
     })
-    .catch(error => next(error))
+    .catch(error => {
+        next(error)
+    })
+
 })
 
 const unknownEndpoint = (request, response) => {
