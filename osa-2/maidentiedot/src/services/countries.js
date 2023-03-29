@@ -6,4 +6,6 @@ const getAll = (url) => {
     return request
 }
 
+
+
 export default {getAll}
