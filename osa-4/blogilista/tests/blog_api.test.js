@@ -6,6 +6,8 @@ const listHelper = require('../utils/list_helper')
 const api = supertest(app)
 
 const Blog = require('../models/blog')
+
+
 const initialBlogs = [
   {
     _id: '5a422b891b54a676234d17fa',
@@ -13,6 +15,7 @@ const initialBlogs = [
     author: 'Robert C. Martin',
     url: 'http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.htmll',
     likes: 10,
+    userId: '6425d4e705d1e6eeb818e7c1',
     __v: 0
   },
   {
@@ -21,6 +24,7 @@ const initialBlogs = [
     author: 'Robert C. Martin',
     url: 'http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html',
     likes: 0,
+    userId: '6425d4e705d1e6eeb818e7c1',
     __v: 0
   }
 ]
@@ -64,6 +68,7 @@ test('post worked', async () => {
     author: 'Robert C. Martin',
     url: 'http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html',
     likes: 0,
+    userId: '6425d4e705d1e6eeb818e7c1',
     __v: 0
   }
 
@@ -80,7 +85,8 @@ test('default value of likes is set to 0', async () => {
     author: 'Robert C. Martin',
     url: 'http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html',
     likes: undefined,
-    __v: 0
+    __v: 0,
+    userId: '6425d4e705d1e6eeb818e7c1',
   }
 
   await api.post('/api/blogs').send(newBlog).expect(201).expect('Content-Type', /application\/json/)
@@ -94,7 +100,7 @@ test('post without title or url equals as 400 bad request', async () => {
     id: 'lol',
     author: 'Robert C. Martin',
     likes: undefined,
-    __v: 0
+    userId: '6425d4e705d1e6eeb818e7c1'
   }
   await api.post('/api/blogs').send(newBlog).expect(400)
 })
