@@ -48,6 +48,10 @@ const App = () => {
   const blogForm = () => {
     return (
     <div>
+      logged in as user {user.username}
+      <form onSubmit={() => window.localStorage.clear()}>
+        <button type='submit'>log out</button>
+      </form>
       <h2>create new</h2>
       <form onSubmit={handleCreate}>
         title: <input type="text" value={title} onChange={({target}) => setTitle(target.value)}/>
