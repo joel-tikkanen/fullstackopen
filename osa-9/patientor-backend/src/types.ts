@@ -17,3 +17,22 @@ export interface Diagnosis {
   name: string;
   latin?: string;
 }
+
+export interface Entry {
+}
+
+export interface Patient {
+  id: string;
+  name: string;
+  gender: string;
+  dateOfBirth: string;
+  occupation: string;
+  ssn: string;
+  entries: Entry[]
+}
+
+export type NonSensitivePatient = Omit<Patient, 'ssn' | 'entries'>;
+
+export type PublicPatient = Omit<Patient, "ssn">;
+
+export type NewPatient = Omit<Patient, "id">;
