@@ -1,6 +1,7 @@
 import express from "express";
 
 import patientService from "../services/patientService";
+import { Patient } from "../types";
 
 const router = express.Router();
 
@@ -25,7 +26,7 @@ router.post("/", (req, res) => {
 router.get("/:id", (req, res) => {
   const { id } = req.params;
   try {
-    const patient = patientService.getPatientById(id);
+    const patient: Patient | undefined = patientService.getPatientById(id);
     res.json(patient);
   } catch (error: any) {
     let errorMessage = "Something went wrong.";
